@@ -26,13 +26,12 @@ const MachineVision = () => {
 		socket.emit('start_stream')
 		socket.once('video_frame', () => { setIsLoading(false) })
 		socket.on('data_response', data => {
-			console.log(data)
 			setScanData(data)
 		})
-		socket.once('data_response', (data) => {
-			setLandmarks(data.face_effect_landmarks)
-			setFacemap(data.face_effect_facemap)
-		})
+		// socket.once('data_response', (data) => {
+		// 	setLandmarks(data.face_effect_landmarks)
+		// 	setFacemap(data.face_effect_facemap)
+		// })
 
 		return () => {
 			socket.off('data_response')
@@ -62,7 +61,7 @@ const MachineVision = () => {
 				if (scanStage === 0 && in_roi) setScanStage(scanStage + 1)
 				else if (scanStage === 1 && !!face_effect_landmarks) setScanStage(scanStage + 1)
 				else if (scanStage === 2 && !!face_effect_facemap) setScanStage(scanStage + 1)
-				else if (scanStage === 3 && energy_meter === null && !!qr_code_link) { setScanStage(scanStage + 1) }
+				else if (scanStage === 3 && energy_meter !== null && !!qr_code_link) { setScanStage(scanStage + 1) }
 			}, delay * 1000)
 		}
 	}, [scanData, scanStage])
@@ -96,7 +95,7 @@ const MachineVision = () => {
 									<>
 										<div className='mask'></div>
 										<ProcessAborter text='machine vision' onClick={handleNavigate} />
-										<VisualScanner data={scanData} stage={scanStage} landmarks={landmarks} facemap={facemap} />
+										<VisualScanner data={scanData} stage={scanStage} landmarks={scanData?.landmarks} facemap={scanData?.facemap} />
 									</>
 								) : (
 									<Result qrUrl={scanData?.qr_code_link} />
