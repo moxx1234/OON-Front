@@ -63,6 +63,11 @@ const MachineVision = () => {
 				else if (scanStage === 2 && !!face_effect_facemap) setScanStage(scanStage + 1)
 				else if (scanStage === 3 && energy_meter !== null && !!qr_code_link) { setScanStage(scanStage + 1) }
 			}, delay * 1000)
+
+			setTimeout(() => {
+				setFacemap(face_effect_facemap)
+				setLandmarks(face_effect_landmarks)
+			}, 1000)
 		}
 	}, [scanData, scanStage])
 
@@ -95,7 +100,7 @@ const MachineVision = () => {
 									<>
 										<div className='mask'></div>
 										<ProcessAborter text='machine vision' onClick={handleNavigate} />
-										<VisualScanner data={scanData} stage={scanStage} landmarks={scanData?.landmarks} facemap={scanData?.facemap} />
+										<VisualScanner data={scanData} stage={scanStage} landmarks={landmarks} facemap={facemap} />
 									</>
 								) : (
 									<Result qrUrl={scanData?.qr_code_link} />
