@@ -14,7 +14,7 @@ const FaceStatsItem = ({ value, unit, name, lineImg = null, animComponent = null
 		<div className="flex gap-3">
 			<div className="flex-1">
 				{lineImg && <AnimatedLine img={lineImg} />}
-				{/* {!!animComponent && animComponent} */}
+				{!!animComponent && animComponent}
 			</div>
 			<div>
 				<Indicator value={value || '-/-'} unit={unit} name={name} />

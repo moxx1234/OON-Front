@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Result from './Result'
 import ExitDialog from '../../components/ExitDialog'
 
-const delay = 5
+const delay = 2
 
 const MachineVision = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -28,10 +28,6 @@ const MachineVision = () => {
 		socket.on('data_response', data => {
 			setScanData(data)
 		})
-		// socket.once('data_response', (data) => {
-		// 	setLandmarks(data.face_effect_landmarks)
-		// 	setFacemap(data.face_effect_facemap)
-		// })
 
 		return () => {
 			socket.off('data_response')
@@ -46,7 +42,9 @@ const MachineVision = () => {
 		else {
 			socket.emit('end_stream', { message: 'scan complete' })
 			socket.disconnect()
-			navigate(location.pathname, { state: 'finished' })
+			const canvas = document.getElementById('full-canvas')
+			canvas.style.opacity = 0
+			canvas.ontransitionend = () => navigate(location.pathname, { state: 'finished' })
 		}
 	}, [scanStage, location.state, location.pathname, navigate])
 
