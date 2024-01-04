@@ -4,7 +4,7 @@ import logo from '../../../assets/logo.svg'
 import FaceScanProgress from './FaceScanProgress'
 import FaceStats from './FaceStats'
 
-const VisualScanner = ({ data, stage, facemap, landmarks }) => {
+const VisualScanner = ({ data, stage, facemap, landmarks, mesh }) => {
 
 	return (
 		<div className='h-full w-full flex items-center'>
@@ -19,7 +19,7 @@ const VisualScanner = ({ data, stage, facemap, landmarks }) => {
 				</p>
 			</div>
 			<div className='column-1/3 flex flex-col gap-14 justify-center items-between px-16'>
-				{!!stage && data && <FaceScanProgress stage={stage} marks={landmarks} facemap={facemap} />}
+				{!!stage && data && <FaceScanProgress stage={stage} marks={landmarks} facemap={facemap} mesh={mesh} />}
 			</div>
 		</div>
 	)

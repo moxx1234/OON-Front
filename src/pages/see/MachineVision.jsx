@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Result from './Result'
 import ExitDialog from '../../components/ExitDialog'
 
-const delay = 2
+const delay = 5
 
 const MachineVision = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -17,6 +17,7 @@ const MachineVision = () => {
 	const [scanStage, setScanStage] = useState(0)
 	const [scanData, setScanData] = useState()
 	const [landmarks, setLandmarks] = useState()
+	const [mesh, setMesh] = useState()
 	const [facemap, setFacemap] = useState()
 	const location = useLocation()
 	const navigate = useNavigate()
@@ -46,11 +47,11 @@ const MachineVision = () => {
 			canvas.style.opacity = 0
 			canvas.ontransitionend = () => navigate(location.pathname, { state: 'finished' })
 		}
-	}, [scanStage, location.state, location.pathname, navigate])
+	}, [scanStage, location, navigate])
 
 	useEffect(() => {
 		if (scanData) {
-			const { face_effect_landmarks, face_effect_facemap, in_roi, qr_code_link, energy_meter } = scanData
+			const { face_effect_landmarks, face_effect_facemap, face_effect_mesh, in_roi, qr_code_link, energy_meter } = scanData
 			if (!in_roi) {
 				setScanStage(0)
 				return
@@ -59,12 +60,13 @@ const MachineVision = () => {
 				if (scanStage === 0 && in_roi) setScanStage(scanStage + 1)
 				else if (scanStage === 1 && !!face_effect_landmarks) setScanStage(scanStage + 1)
 				else if (scanStage === 2 && !!face_effect_facemap) setScanStage(scanStage + 1)
-				else if (scanStage === 3 && energy_meter !== null && !!qr_code_link) { setScanStage(scanStage + 1) }
+				else if (scanStage === 3 && !!face_effect_mesh && energy_meter !== null && !!qr_code_link) { setScanStage(scanStage + 1) }
 			}, delay * 1000)
 
 			setTimeout(() => {
 				setFacemap(face_effect_facemap)
 				setLandmarks(face_effect_landmarks)
+				setMesh(face_effect_mesh)
 			}, 1000)
 		}
 	}, [scanData, scanStage])
@@ -98,7 +100,7 @@ const MachineVision = () => {
 									<>
 										<div className='mask'></div>
 										<ProcessAborter text='machine vision' onClick={handleNavigate} />
-										<VisualScanner data={scanData} stage={scanStage} landmarks={landmarks} facemap={facemap} />
+										<VisualScanner data={scanData} stage={scanStage} landmarks={landmarks} facemap={facemap} mesh={mesh} />
 									</>
 								) : (
 									<Result qrUrl={scanData?.qr_code_link} />
