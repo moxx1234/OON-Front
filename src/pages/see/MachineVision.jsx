@@ -14,7 +14,7 @@ const delay = 5
 const MachineVision = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
-	const [scanStage, setScanStage] = useState(3)
+	const [scanStage, setScanStage] = useState(0)
 	const [scanData, setScanData] = useState()
 	const [landmarks, setLandmarks] = useState()
 	const [mesh, setMesh] = useState()
