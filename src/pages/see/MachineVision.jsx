@@ -56,12 +56,12 @@ const MachineVision = () => {
 				setScanStage(0)
 				return
 			}
-			// setTimeout(() => {
-			// 	if (scanStage === 0 && in_roi) setScanStage(scanStage + 1)
-			// 	else if (scanStage === 1 && !!face_effect_landmarks) setScanStage(scanStage + 1)
-			// 	else if (scanStage === 2 && !!face_effect_facemap) setScanStage(scanStage + 1)
-			// 	else if (scanStage === 3 && !!face_effect_mesh && energy_meter !== null && !!qr_code_link) { setScanStage(scanStage + 1) }
-			// }, delay * 1000)
+			setTimeout(() => {
+				if (scanStage === 0 && in_roi) setScanStage(scanStage + 1)
+				else if (scanStage === 1 && !!face_effect_landmarks) setScanStage(scanStage + 1)
+				else if (scanStage === 2 && !!face_effect_facemap) setScanStage(scanStage + 1)
+				else if (scanStage === 3 && !!face_effect_mesh && energy_meter !== null && !!qr_code_link) { setScanStage(scanStage + 1) }
+			}, delay * 1000)
 
 			setTimeout(() => {
 				setFacemap(face_effect_facemap)
