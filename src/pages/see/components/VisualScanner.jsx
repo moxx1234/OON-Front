@@ -15,7 +15,7 @@ const VisualScanner = ({ data, stage, facemap, landmarks, mesh }) => {
 				<img src={logo} alt="logo" className='w-16 h-16' />
 				<p className='bg-white rounded-full py-3 px-4 flex gap-3'>
 					<img src={data?.in_roi ? success : info} alt="info icon" className='w-8 h-8' />
-					<span className='text-xl'>{(data?.in_roi && data?.message) || 'Your face must be inside the frame'}</span>
+					<span className='text-xl'>{data?.message || 'Your face must be inside the frame'}</span>
 				</p>
 			</div>
 			<div className='column-1/3 flex flex-col gap-14 justify-center items-between px-16'>
