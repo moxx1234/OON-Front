@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Result from './Result'
 import ExitDialog from '../../components/ExitDialog'
 
-const delay = 5
+const delay = 2
 
 const MachineVision = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -23,12 +23,11 @@ const MachineVision = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
+		// socket connection
 		socket.connect()
 		socket.emit('start_stream')
 		socket.once('video_frame', () => { setIsLoading(false) })
-		socket.on('data_response', data => {
-			setScanData(data)
-		})
+		socket.on('data_response', data => { setScanData(data) })
 
 		return () => {
 			socket.off('data_response')
@@ -38,9 +37,13 @@ const MachineVision = () => {
 	}, [])
 
 	useEffect(() => {
+		// navigate to menu if user refreshed the page during scanning
 		if (scanStage === 0 && location.state === 'finished') { return navigate('/', { state: null }) }
+
+		// scan stage changes emitions
 		if (scanStage <= 3) socket.emit('change_stage', { stage: scanStage })
 		else {
+			// ending of scanning proccess
 			socket.emit('end_stream', { message: 'scan complete' })
 			socket.disconnect()
 			const canvas = document.getElementById('full-canvas')
@@ -52,10 +55,11 @@ const MachineVision = () => {
 	useEffect(() => {
 		if (scanData) {
 			const { face_effect_landmarks, face_effect_facemap, face_effect_mesh, in_roi, qr_code_link, energy_meter } = scanData
-			if (!in_roi) {
-				setScanStage(0)
-				return
-			}
+
+			// restart the process if something is wrong with the face (from backend)
+			if (!in_roi) { return setScanStage(0) }
+
+			// timeout for visual scan stages progress (delay is global variable defined on top of the file)
 			setTimeout(() => {
 				if (scanStage === 0 && in_roi) setScanStage(scanStage + 1)
 				else if (scanStage === 1 && !!face_effect_landmarks) setScanStage(scanStage + 1)
@@ -63,6 +67,7 @@ const MachineVision = () => {
 				else if (scanStage === 3 && !!face_effect_mesh && energy_meter !== null && !!qr_code_link) { setScanStage(scanStage + 1) }
 			}, delay * 1000)
 
+			// delays for canvas drawing based on backend data
 			setTimeout(() => {
 				setFacemap(face_effect_facemap)
 				setLandmarks(face_effect_landmarks)
@@ -71,6 +76,7 @@ const MachineVision = () => {
 		}
 	}, [scanData, scanStage])
 
+	// abort process handlers
 	const handleNavigate = () => {
 		setIsModalOpen(true)
 	}
