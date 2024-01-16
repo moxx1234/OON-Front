@@ -2,12 +2,12 @@
 
 const Indicator = ({ value, unit, name }) => {
 	return (
-		<div className="text-[#222] font-bold flex flex-col items-end mb-2">
-			<p className="text-4xl capitalize">
+		<div className="tw-text-[#222] tw-font-bold tw-flex tw-flex-col tw-items-end tw-mb-2">
+			<p className="tw-text-4xl tw-capitalize">
 				{value}
-				{unit && <span className="text-base font-normal ml-2 normal-case">/{unit}</span>}
+				{unit && <span className="tw-text-base tw-font-normal tw-ml-2 tw-normal-case">/{unit}</span>}
 			</p>
-			<p className="uppercase">{name}</p>
+			<p className="tw-uppercase">{name}</p>
 		</div>
 	)
 }

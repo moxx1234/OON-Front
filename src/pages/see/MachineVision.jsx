@@ -8,6 +8,7 @@ import VisualScanner from './components/VisualScanner'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Result from './Result'
 import ExitDialog from '../../components/ExitDialog'
+import Header from '../../components/Header'
 
 const delay = 2
 
@@ -93,27 +94,27 @@ const MachineVision = () => {
 				isLoading ?
 					<Loader icon={eye} text='machine vision' status='complete!' key='loader' />
 					: (
-						<>
+						<motion.div
+							className='tw-flex tw-flex-col tw-flex-1'
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							transition={{ duration: .8 }}
+						>
 							<ExitDialog isOpen={isModalOpen} onConfirmNav={handleConfirmNav} onCancelNav={handleCancelNav} />
-							<motion.div
-								className='w-full h-full flex justify-center items-center'
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								exit={{ opacity: 0 }}
-								transition={{ duration: .8 }}
-							>
-								{location.state !== 'finished' ? (
-									<>
-										<div className='mask'></div>
-										<ProcessAborter text='machine vision' onClick={handleNavigate} />
-										<VisualScanner data={scanData} stage={scanStage} landmarks={landmarks} facemap={facemap} mesh={mesh} />
-									</>
-								) : (
-									<Result qrUrl={scanData?.qr_code_link} />
-								)}
 
-							</motion.div>
-						</>
+							{location.state !== 'finished' ? (
+								<>
+									<Header process='machine vision' abort={handleNavigate} />
+									<div className='mask'></div>
+									<VisualScanner data={scanData} stage={scanStage} landmarks={landmarks} facemap={facemap} mesh={mesh} />
+								</>
+							) : (
+								<div className='tw-flex tw-flex-1 tw-justify-center tw-items-center'>
+									<Result qrUrl={scanData?.qr_code_link} />
+								</div>
+							)}
+						</motion.div>
 					)
 			}
 		</AnimatePresence>

@@ -2,8 +2,8 @@ import Indicator from "./Indicator"
 
 const AnimatedLine = ({ img }) => {
 	return (
-		<div className=" w-full h-full overflow-hidden">
-			<div className="animation-line h-full" style={{ backgroundImage: `url(.${img})` }}></div>
+		<div className=" tw-w-full tw-h-full tw-overflow-hidden">
+			<div className="animation-line tw-h-full" style={{ backgroundImage: `url(.${img})` }}></div>
 		</div>
 	)
 }
@@ -11,8 +11,8 @@ const AnimatedLine = ({ img }) => {
 const FaceStatsItem = ({ value, unit, name, lineImg = null, animComponent = null }) => {
 
 	return (
-		<div className="flex gap-3">
-			<div className="flex-1">
+		<div className="tw-flex tw-gap-3">
+			<div className="tw-flex-1">
 				{lineImg && <AnimatedLine img={lineImg} />}
 				{!!animComponent && animComponent}
 			</div>

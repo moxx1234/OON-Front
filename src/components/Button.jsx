@@ -1,7 +1,8 @@
 
-const Button = ({ type, text, className, ...props }) => {
+const Button = ({ style, text, className, ...props }) => {
+	// style: 'confirm' || 'dismiss'
 	return (
-		<button className={`${type}-button uppercase ${className}`} {...props}>{text}</button>
+		<button className={`${style}-button tw-uppercase ${className}`} {...props}>{text}</button>
 	)
 }
 

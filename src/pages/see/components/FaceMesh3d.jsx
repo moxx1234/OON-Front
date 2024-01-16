@@ -82,7 +82,7 @@ const FaceMesh3d = ({ points }) => {
 	}, [points])
 
 	return <div
-		className="w-full h-full -scale-x-100"
+		className="tw-w-full tw-h-full tw--scale-x-100"
 		ref={mountRef}
 	/>
 }

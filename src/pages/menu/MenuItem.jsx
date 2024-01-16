@@ -6,12 +6,12 @@ const MenuItem = ({ id, icon, title, description, onClick }) => {
 		<Link
 			to={id}
 			id={id}
-			className="bg-gradient-to-r from-white to-[#EFF8FF] rounded-3xl p-6 flex items-center gap-6"
+			className="tw-bg-gradient-to-r tw-from-white tw-to-[#EFF8FF] tw-rounded-3xl tw-p-6 tw-flex tw-items-center tw-gap-6"
 			onClick={onClick && onClick}
 		>
-			<img src={icon.path} alt={icon.alt} className="w-20 h-20" />
+			<img src={icon.path} alt={icon.alt} className="tw-w-20 tw-h-20" />
 			<div>
-				<p className="uppercase font-semibold text-xl">{title}</p>
+				<p className="tw-uppercase tw-font-semibold tw-text-xl">{title}</p>
 				<p>{description}</p>
 			</div>
 		</Link>

@@ -62,6 +62,9 @@
 	background-color: #09101D;
 	color: #fff;
 }
+.confirm-button:disabled {
+		background-color: #595968;
+	}
 .dismiss-button {
 	background-color: #D5DDE3;
 	color: #09101D;

@@ -7,16 +7,17 @@ const stages = [null, 'Scanning points on the face', 'Creating a face map', 'Cre
 
 const FaceScanProgress = ({ stage, marks, facemap, mesh }) => {
 	return (
-		<div className='flex flex-col gap-3'>
-			<div className='bg-[#fff]/40 p-6 rounded-3xl text-center'>
+		<div className='tw-flex tw-flex-col tw-gap-3'>
+			<div className='tw-bg-[#fff]/40 tw-p-6 tw-rounded-3xl tw-text-center'>
 				<StageProgress stage={stage} />
 			</div>
-			<div className='bg-[#fff]/40 p-6 rounded-3xl text-center'>
-				<div className='h-80'>
-					{stage < 3 ?
+			<div className='tw-bg-[#fff]/40 tw-p-6 tw-rounded-3xl tw-text-center'>
+				<div className='tw-h-80'>
+					<FaceCanvas landmarks={marks} facemap={facemap} stage={stage} />
+					{/* {stage < 3 ?
 						<FaceCanvas landmarks={marks} facemap={facemap} stage={stage} />
 						: <FaceMesh3d points={mesh} />
-					}
+					} */}
 				</div>
 				<p>{stages[stage]}</p>
 			</div>

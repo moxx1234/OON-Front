@@ -2,9 +2,9 @@ import cross from '../assets/icons/cross.svg'
 
 const ProcessAborter = ({ text, onClick }) => {
 	return (
-		<button onClick={onClick} className='absolute left-0 top-10 bg-white py-3 px-4 rounded-r-full uppercase flex items-center gap-3 text-xl font-semibold'>
+		<button onClick={onClick} className='tw-bg-white tw-py-3 tw-px-4 tw-rounded-r-xl tw-uppercase tw-flex tw-items-center tw-gap-3 tw-text-xl tw-font-semibold'>
 			<span>{text}</span>
-			<img src={cross} alt="close" className='object-fill' />
+			<img src={cross} alt="close" className='tw-object-fill' />
 		</button>
 	)
 }

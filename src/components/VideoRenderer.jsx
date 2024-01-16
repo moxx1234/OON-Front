@@ -40,10 +40,10 @@ const VideoRenderer = ({ location }) => {
 	}, [location])
 
 	return (
-		<div className="w-screen h-screen absolute object-left-top -z-10">
+		<div className="tw-w-screen tw-h-screen tw-absolute tw-object-left-top tw--z-10">
 			<canvas ref={canvasRef} id='full-canvas' />
 			<video
-				className='absolute top-0 left-0'
+				className='tw-absolute tw-top-0 tw-left-0'
 				id="local-video"
 				src={highCompressed}
 				loop

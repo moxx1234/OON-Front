@@ -70,36 +70,37 @@ const Menu = () => {
 	}
 
 	return (
-		<div className="flex flex-col items-center gap-14 w-1/3">
-			<div><img src={logo} alt="logo" /></div>
-			<motion.nav
-				className="flex flex-col justify-center gap-6 min-h-[432px] w-full"
-				animate={controls}
-				onAnimationComplete={handleAnimationComplete}
-			>
-				<AnimatePresence mode='popLayout'>
-					{
-						renderedItems.map(item => (
-							<motion.div
-								key={item.id}
-								custom={item.ids}
-								exit={{ opacity: 0 }}
-								transition={{ duration: transitionDuration }}
-								layout
-							>
-								<MenuItem
-									id={item.id}
-									icon={item.icon}
-									title={item.title}
-									description={item.description}
-									onClick={handleClick}
-								/>
-							</motion.div>
-						))
-					}
-				</AnimatePresence>
-
-			</motion.nav>
+		<div className='tw-w-full tw-h-full tw-flex tw-items-center tw-justify-center'>
+			<div className="tw-flex tw-flex-col tw-items-center tw-gap-14 tw-w-1/3">
+				<div><img src={logo} alt="logo" /></div>
+				<motion.nav
+					className="tw-flex tw-flex-col tw-justify-center tw-gap-6 tw-min-h-[432px] tw-w-full"
+					animate={controls}
+					onAnimationComplete={handleAnimationComplete}
+				>
+					<AnimatePresence mode='popLayout'>
+						{
+							renderedItems.map(item => (
+								<motion.div
+									key={item.id}
+									custom={item.ids}
+									exit={{ opacity: 0 }}
+									transition={{ duration: transitionDuration }}
+									layout
+								>
+									<MenuItem
+										id={item.id}
+										icon={item.icon}
+										title={item.title}
+										description={item.description}
+										onClick={handleClick}
+									/>
+								</motion.div>
+							))
+						}
+					</AnimatePresence>
+				</motion.nav>
+			</div>
 		</div>
 	)
 }

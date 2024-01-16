@@ -35,7 +35,7 @@ const SemiCircle = ({ value }) => {
 		setLevel(value, arcRef)
 	}, [value])
 	return (
-		<div className="relative w-fit">
+		<div className="tw-relative tw-w-fit">
 			<svg ref={arcRef} id="meter" viewBox="0 0 161 80" width="161" height="80">
 				<defs>
 					<linearGradient id="progressGradient" x1="155.69" x2="4.19" y1="25.13" y2="26.63" gradientTransform="matrix(1 0 0 -1 -.04 81.98)" gradientUnits="userSpaceOnUse">
@@ -57,7 +57,7 @@ const SemiCircle = ({ value }) => {
 				<line x1="47.87" x2="38.43" y1="27.7" y2="12.88" fill="none" stroke="#09101d" strokeWidth="2" />
 				<line x1="112.92" x2="122.55" y1="28.3" y2="13.18" fill="none" stroke="#09101d" strokeWidth="2" />
 			</svg>
-			<svg ref={pointerRef} id="pointer" className="absolute bottom-0 left-1/2" width="9" height="49" viewBox="0 0 9 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<svg ref={pointerRef} id="pointer" className="tw-absolute tw-bottom-0 tw-left-1/2" width="9" height="49" viewBox="0 0 9 49" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<g id="needle">
 					<path d="M4.41492 48.7434C6.85322 48.7434 8.82985 46.9905 8.82985 44.8282C8.82985 42.6658 6.85322 40.9129 4.41492 40.9129C1.97663 40.9129 -1.277e-06 42.6658 -1.32817e-06 44.8282C-1.37934e-06 46.9905 1.97663 48.7434 4.41492 48.7434Z" fill="black" />
 					<path d="M-1.32817e-06 44.8282L3.418 1.37448C3.51466 0.145699 5.31519 0.145686 5.41185 1.37446L8.82985 44.8282" fill="black" />

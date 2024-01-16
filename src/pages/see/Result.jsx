@@ -11,11 +11,11 @@ const Result = ({ qrUrl }) => {
 	}
 
 	return (
-		<div className="flex flex-col items-center justify-evenly h-full">
+		<div className="tw-flex tw-flex-col tw-items-center tw-justify-evenly tw-h-full">
 			<div><img src={logo} alt="logo" className='w-20 h-20' /></div>
-			<div className='bg-gradient-to-r from-white to-[#EFF8FF] rounded-3xl p-10 flex flex-col items-center'>
-				<p className='uppercase tracking-[.75em] text-5xl font-extrabold mb-8'>scan</p>
-				<p className='text-2xl font-semibold mb-8'>Get your personalized summary here:</p>
+			<div className='tw-bg-gradient-to-r tw-from-white tw-to-[#EFF8FF] tw-rounded-3xl tw-p-10 tw-flex tw-flex-col tw-items-center'>
+				<p className='tw-uppercase tw-tracking-[.75em] tw-text-5xl tw-font-extrabold tw-mb-8'>scan</p>
+				<p className='tw-text-2xl tw-font-semibold tw-mb-8'>Get your personalized summary here:</p>
 				<QRCode
 					value={qrUrl}
 					logoImage={qrLogo}
@@ -26,11 +26,11 @@ const Result = ({ qrUrl }) => {
 					eyeRadius={10}
 					size={222}
 				/>
-				<p className='uppercase mt-11 text-5xl font-bold'>thank you!</p>
+				<p className='tw-uppercase tw-mt-11 tw-text-5xl tw-font-bold'>thank you!</p>
 			</div>
 			<Button
-				className='py-6 w-full font-semibold text-xl'
-				type='confirm'
+				className='tw-py-6 tw-w-full tw-font-semibold tw-text-xl'
+				style='confirm'
 				text='main menu'
 				onClick={handleClick}
 			/>
