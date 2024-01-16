@@ -29,7 +29,7 @@ const correctLocation = (canvas) => {
 
 const FaceCanvas = ({ landmarks, facemap, stage }) => {
 	const canvasRef = useRef(null)
-	const showLines = stage = 2
+	const showLines = stage === 2
 
 	useEffect(() => {
 		if (canvasRef.current && landmarks) {

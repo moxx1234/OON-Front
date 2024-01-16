@@ -10,7 +10,7 @@ import Result from './Result'
 import ExitDialog from '../../components/ExitDialog'
 import Header from '../../components/Header'
 
-const delay = 2
+const delay = 5
 
 const MachineVision = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
