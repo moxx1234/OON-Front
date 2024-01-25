@@ -3,11 +3,10 @@ import axios from "axios"
 const URL = process.env.REACT_APP_BACKEND_URL
 
 export const postDeviceData = async (data) => {
-	const { deviceNumber, userId } = data
 	return await axios.post(`${URL}/api/vibrome/check-device`, {
-		device_id: Number(deviceNumber),
-		user_id: Number(userId),
+		device_id: Number(data.device_id),
+		user_id: Number(data.user_id),
 	})
 		.then(result => result)
-		.catch(error => error)
+		.catch(error => { throw error })
 }

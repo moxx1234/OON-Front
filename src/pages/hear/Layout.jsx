@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router"
 import Header from "../../components/Header"
 import ExitDialog from "../../components/ExitDialog"
 
-const Vibrome = () => {
+const Layout = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const navigate = useNavigate()
 	const location = useLocation()
@@ -22,10 +22,15 @@ const Vibrome = () => {
 	return (
 		<>
 			<Header process='Vibrome' abort={handleAbort} />
-			<ExitDialog isOpen={isModalOpen} onConfirmNav={handleConfirmAbort} onCancelNav={handleCancelAbort} />
+			<ExitDialog
+				isOpen={isModalOpen}
+				onConfirmNav={handleConfirmAbort}
+				onCancelNav={handleCancelAbort}
+				question='Are you sure you want to stop the VIBROME process?'
+			/>
 			<Outlet />
 		</>
 	)
 }
 
-export default Vibrome
+export default Layout

@@ -1,7 +1,7 @@
 import { Modal } from "react-bootstrap"
 import Button from "./Button"
 
-const ExitDialog = ({ isOpen, onConfirmNav, onCancelNav }) => {
+const ExitDialog = ({ isOpen, onConfirmNav, onCancelNav, question }) => {
 	return (
 		<Modal
 			show={isOpen}
@@ -10,7 +10,7 @@ const ExitDialog = ({ isOpen, onConfirmNav, onCancelNav }) => {
 			<Modal.Body>
 				<div className="tw-flex tw-flex-col tw-gap-9">
 					<div className="tw-text-center">
-						<p className="tw-text-3xl tw-font-bold tw-mb-6">Are you sure you want to stop the scanning process?</p>
+						<p className="tw-text-3xl tw-font-bold tw-mb-6">{question}</p>
 						<p className="tw-text-2xl tw-font-medium">Any unsaved progress will be lost</p>
 					</div>
 					<div className="tw-flex tw-gap-4">

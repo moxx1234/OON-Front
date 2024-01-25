@@ -70,7 +70,7 @@ const Menu = () => {
 	}
 
 	return (
-		<div className='tw-w-full tw-h-full tw-flex tw-items-center tw-justify-center'>
+		<div className='tw-w-full tw-h-full tw-flex tw-flex-1 tw-items-center tw-justify-center'>
 			<div className="tw-flex tw-flex-col tw-items-center tw-gap-14 tw-w-1/3">
 				<div><img src={logo} alt="logo" /></div>
 				<motion.nav

@@ -1,15 +1,16 @@
 import { useField } from 'formik'
 import { useEffect, useRef, useState } from 'react'
 import { Modal } from 'react-bootstrap'
-import hintIcon from '../../../../assets/icons/hint.svg'
+import hintIcon from '../../../assets/icons/hint.svg'
 
-const OTPField = ({ name, otpLength, error, touched, label, Hint }) => {
+const OTPField = ({ name, otpLength, label, Hint }) => {
 	const [isHintOpen, setIsHintOpen] = useState(false)
 	const [otp, setOtp] = useState(new Array(otpLength).fill(''))
 	const [isFocusSet, setIsFocusSet] = useState(false)
 	const [activeIndex, setActiveIndex] = useState(0)
 	const inputRef = useRef(null)
 	const [field, meta, helpers] = useField(name)
+	const { error, touched } = meta
 
 	useEffect(() => {
 		const inputs = inputRef.current.querySelectorAll('input')
