@@ -11,7 +11,7 @@ const Result = ({ qrUrl }) => {
 	}
 
 	return (
-		<div className="tw-flex tw-flex-col tw-items-center tw-justify-evenly tw-h-full">
+		<div className="tw-flex tw-flex-1 tw-flex-col tw-items-center tw-justify-evenly tw-h-full">
 			<div><img src={logo} alt="logo" className='w-20 h-20' /></div>
 			<div className='tw-bg-gradient-to-r tw-from-white tw-to-[#EFF8FF] tw-rounded-3xl tw-p-10 tw-flex tw-flex-col tw-items-center'>
 				<p className='tw-uppercase tw-tracking-[.75em] tw-text-5xl tw-font-extrabold tw-mb-8'>scan</p>

@@ -156,3 +156,105 @@
 .radio-all .custom-radio {
 	border: none;
 }
+
+#frequency-range {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 8px;
+	cursor: pointer;
+	outline: none;
+	border-radius: 50px;
+}
+
+#frequency-range::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	background-color: #09101D;
+	border: 5px solid #fff;
+	border-radius: 50%;
+}
+
+#frequency-range::-moz-range-thumb {
+	width: 10px;
+	height: 10px;
+	background-color: #09101D;
+	border: 5px solid #fff;
+	border-radius: 50%;
+}
+
+.frequency-step {
+	position: relative;
+	padding-top: 8px;
+	width: 12px;
+	text-align: center;
+}
+
+.frequency-step::before {
+	content: '';
+	position: absolute;
+	width: 1px;
+	height: 8px;
+	top: 0;
+	left: 50%;
+	background-color: #6A727D;
+}
+
+/* Vibrome scan points */
+.front-dots-list div, .back-dots-list div {
+	position: absolute;
+	transform: translateX(-50%);
+}
+/* Front side */
+.front-dots-list div:nth-child(1) {
+	top: 8%;
+	left: 58%;
+}
+.front-dots-list div:nth-child(2) {
+	top: 32%;
+	left: 63%;
+}
+.front-dots-list div:nth-child(3) {
+	top: 32%;
+	left: 36%;
+}
+.front-dots-list div:nth-child(4) {
+	top: 63%;
+	left: 35%;
+}
+.front-dots-list div:nth-child(5) {
+	top: 63%;
+	left: 66%;
+}
+.front-dots-list div:nth-child(6) {
+	top: 78%;
+	left: 50%;
+}
+
+/* Back side */
+.back-dots-list div:nth-child(1) {
+	top: 20%;
+	left: 34%;
+}
+.back-dots-list div:nth-child(2) {
+	top: 20%;
+	left: 65%;
+}
+.back-dots-list div:nth-child(3) {
+	top: 40%;
+	left: 65%;
+}
+.back-dots-list div:nth-child(4) {
+	top: 40%;
+	left: 36%;
+}
+.back-dots-list div:nth-child(5) {
+	top: 70%;
+	left: 33%;
+}
+.back-dots-list div:nth-child(6) {
+	top: 70%;
+	left: 68%;
+}

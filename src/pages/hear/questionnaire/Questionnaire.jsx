@@ -1,9 +1,9 @@
-import { useState } from "react"
-import Questions from "./Questions"
-import QuestionnaireForm from "../forms/QuestionnaireForm"
-import { submitQuestionnaire } from "../../../api/vibrome/questionnaire"
 import { AnimatePresence } from "framer-motion"
+import { useState } from "react"
 import { useNavigate } from "react-router"
+import { submitQuestionnaire } from "../../../api/vibrome/questionnaire"
+import QuestionnaireForm from "../forms/QuestionnaireForm"
+import Questions from "./Questions"
 
 const stages = [
 	'personal_data_consent',
@@ -15,7 +15,6 @@ const Questionnaire = () => {
 	const [answers, setAnswers] = useState({})
 	const [stage, setStage] = useState(0)
 	const navigate = useNavigate()
-	console.log(answers)
 
 	const handleAnswer = ({ target }) => {
 		const { value } = target

@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { socket } from '../../api/machineVision'
+import { socket } from '../../api/socket'
 import eye from '../../assets/icons/see.svg'
 import Loader from '../../components/Loader'
 import ProcessAborter from '../../components/ProcessAborter'
@@ -110,7 +110,7 @@ const MachineVision = () => {
 									<VisualScanner data={scanData} stage={scanStage} landmarks={landmarks} facemap={facemap} mesh={mesh} />
 								</>
 							) : (
-								<div className='tw-flex tw-flex-1 tw-justify-center tw-items-center'>
+								<div className='tw-flex tw-flex-col tw-flex-1 tw-justify-center tw-items-center'>
 									<Result qrUrl={scanData?.qr_code_link} />
 								</div>
 							)}

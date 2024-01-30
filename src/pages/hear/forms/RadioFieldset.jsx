@@ -3,11 +3,12 @@ import RadioInput from './RadioInput'
 
 const RadioFieldSet = ({ label, name }) => {
 	const [field, meta, helpers] = useField(name)
+
 	const handleChange = (e) => {
-		console.log(e.target.value)
 		helpers.setTouched(true)
 		helpers.setValue(e.target.value === 'yes' ? true : false)
 	}
+
 	return (
 		<div className='tw-flex tw-justify-between tw-items-center tw-text-lg tw-font-medium tw-p-4 tw-border tw-border-[#D5DDE3] tw-rounded-[20px]'>
 			{label}

@@ -29,6 +29,7 @@ const Questions = ({ stage, onAnswer }) => {
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
+			key={stage}
 		>
 			<div className="tw-max-w-[686px] tw-flex tw-flex-col tw-gap-4 tw-mb-9">
 				{renderQuestions()}

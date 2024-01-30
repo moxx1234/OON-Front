@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { socket } from '../api/machineVision'
+import { socket } from '../api/socket'
 import highCompressed from "../assets/video/high-bg.mp4"
 
 const VideoRenderer = ({ location }) => {

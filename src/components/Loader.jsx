@@ -4,7 +4,7 @@ import logo from '../assets/logo.svg'
 
 const Loader = ({ icon, text, status }) => {
 	return (
-		<div className='tw-w-screen tw-h-screen tw-flex tw-flex-col tw-items-center tw-justify-center gap-14'>
+		<div className='tw-w-screen tw-h-screen tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-14'>
 			<motion.div
 				exit={{ opacity: 0 }}
 				transition={{ duration: .5 }}
