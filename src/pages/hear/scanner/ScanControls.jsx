@@ -1,7 +1,9 @@
-import ColorButton from "../../../components/Button"
-import play from '../../../assets/icons/play.svg'
+import { useContext } from "react"
 import pause from '../../../assets/icons/pause.svg'
+import play from '../../../assets/icons/play.svg'
 import restart from '../../../assets/icons/restart.svg'
+import ColorButton from "../../../components/Button"
+import { ScanContext } from "../context/ScannerProvider"
 
 const setButtonsInnerHTML = (icon, text) => {
 	return (
@@ -12,25 +14,26 @@ const setButtonsInnerHTML = (icon, text) => {
 	)
 }
 
-const ScanControls = ({ onStart, onPause, onRestart, isScanning, isInitialised }) => {
+const ScanControls = () => {
+	const { controls, status } = useContext(ScanContext)
 
 	const render = () => {
-		if (isScanning && isInitialised) {
+		if (status.isScanning && status.hasStarted) {
 			return (
 				<>
-					<Button text={setButtonsInnerHTML(pause, 'pause')} onClick={onPause} />
-					<Button text={setButtonsInnerHTML(restart, 'restart')} onClick={onRestart} />
+					<Button text={setButtonsInnerHTML(pause, 'pause')} onClick={controls.stop} />
+					<Button text={setButtonsInnerHTML(restart, 'restart')} onClick={controls.restart} />
 				</>
 			)
-		} else if (!isScanning && isInitialised) {
+		} else if (!status.isScanning && status.hasStarted) {
 			return (
 				<>
-					<PlayButton onClick={onStart} text={setButtonsInnerHTML(play, 'start')} />
-					<Button text={setButtonsInnerHTML(restart, 'restart')} onClick={onRestart} />
+					<PlayButton onClick={controls.start} text={setButtonsInnerHTML(play, 'start')} />
+					<Button text={setButtonsInnerHTML(restart, 'restart')} onClick={controls.restart} />
 				</>
 			)
 		} else {
-			return <PlayButton onClick={onStart} text={setButtonsInnerHTML(play, 'start')} />
+			return <PlayButton onClick={controls.start} text={setButtonsInnerHTML(play, 'start')} />
 		}
 	}
 
