@@ -11,7 +11,7 @@ const FrontVisual = ({ stage, totalStages }) => {
 				src={frontImg}
 				alt="front side scan map"
 			/>
-			<div className='front-dots-list'>
+			<div className='front-dots-list tw-w-full tw-h-full'>
 				{new Array(totalStages).fill(null).map((_, index) => (
 					stage >= index && (
 						<Fragment key={index}>

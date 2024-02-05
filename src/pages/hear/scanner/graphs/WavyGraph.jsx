@@ -1,6 +1,7 @@
-import React from 'react'
 
-const WavyGraph = ({ title, data }) => {
+
+const WavyGraph = ({ title }) => {
+
 	return (
 		<div className='tw-flex tw-flex-col tw-gap-4'>
 			<p className='tw-font-semibold'>{title}</p>

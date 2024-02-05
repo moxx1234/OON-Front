@@ -3,7 +3,7 @@ import useVibromeControls from "../../../hooks/useVibromeControls"
 import { socket } from "../../../api/socket"
 import { useNavigate } from "react-router"
 
-const stageDuration = 5000
+const stageDuration = 30000
 const totalStages = { front: 6, back: 6 }
 
 export const ScanContext = createContext()
@@ -18,13 +18,16 @@ const ScannerProvider = ({ children, scenario }) => {
 	// Socket connection
 	useEffect(() => {
 		socket.connect()
-		socket.emit('get_measurements')
 
 		return () => {
 			socket.removeAllListeners('data_response')
 			socket.disconnect()
 		}
 	}, [])
+
+	useEffect(() => {
+		console.log(scanData)
+	}, [scanData])
 
 	// Navigation depending on chosen scenario
 	useEffect(() => {
@@ -41,11 +44,15 @@ const ScannerProvider = ({ children, scenario }) => {
 	const handleStart = () => {
 		controls.start()
 		startScan()
+		// {device position: {front: number[], side: number[]}}
+		// {frequency_versus_time: number[]}
+		socket.emit('start_scan')
 		socket.on('data_response', data => setScanData(data))
 	}
 	const handlePause = () => {
 		controls.stop()
 		stopScan()
+		if (state.isScanning) socket.emit('pause_scan')
 		socket.removeAllListeners('data_response')
 	}
 	const handleRestart = () => {
@@ -78,6 +85,7 @@ const ScannerProvider = ({ children, scenario }) => {
 			...scanStatus,
 			isScanning,
 			hasStarted,
+			stageDuration,
 			totalStages
 		},
 		data: scanData
