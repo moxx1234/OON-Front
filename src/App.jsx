@@ -6,6 +6,7 @@ import Questionnaire from "./pages/hear/questionnaire/Questionnaire"
 import Scanner from "./pages/hear/scanner/Scanner"
 import Menu from "./pages/menu/Menu"
 import MachineVision from "./pages/see/MachineVision"
+import Result from "./pages/hear/scanner/Result"
 
 const App = () => {
 	const location = useLocation()
@@ -19,8 +20,9 @@ const App = () => {
 				<Route path="/hear" element={<Layout />} >
 					<Route index element={<OTPForm />} />
 					<Route path="questionnaire" element={<Questionnaire />} />
-					<Route path="scanner" element={<Scanner />} />
+					<Route path="scanner" element={<Scanner />} ></Route>
 				</Route>
+				<Route path="result/:qrUrl" element={<Result />} />
 			</Routes>
 		</div>
 	)

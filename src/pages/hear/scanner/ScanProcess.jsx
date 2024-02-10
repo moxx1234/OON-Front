@@ -36,7 +36,7 @@ const ScanProcess = ({ scenario }) => {
 						<div className=' tw-max-w-[1440px] tw-flex tw-gap-6 tw-flex-1'>
 							<div className='tw-basis-1/3 tw-flex tw-flex-col tw-gap-6'>
 								<div className='tw-p-6 tw-flex tw-flex-col tw-gap-8 tw-rounded-3xl tw-bg-[rgba(255,255,255,0.70)]'>
-									<WavyGraph name="'audible_inaudible" title='Audible and Inaudible Sound Collected from Body' />
+									<WavyGraph name="audible_inaudible" title='Audible and Inaudible Sound Collected from Body' />
 									<WavyGraph name="infrasound" title='Infrasound (Novel Data)' />
 									<WavyGraph name="electronic_stethoscope" title='Typical Electronic Stethoscope' />
 								</div>

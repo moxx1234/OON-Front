@@ -12,6 +12,7 @@ const ScannerProvider = ({ children, scenario }) => {
 	const [controls, state] = useVibromeControls()
 	const [scanStatus, setScanStatus] = useState({ side: 'front', stage: 0 })
 	const [scanData, setScanData] = useState()
+	const [resultLink, setResultLink] = useState('')
 	const intervalId = useRef(null)
 	const navigate = useNavigate()
 
@@ -22,11 +23,11 @@ const ScannerProvider = ({ children, scenario }) => {
 		return () => {
 			socket.removeAllListeners('data_response')
 			socket.disconnect()
+			clearInterval(intervalId)
 		}
 	}, [])
 
 	useEffect(() => {
-		console.log(scanData)
 	}, [scanData])
 
 	// Navigation depending on chosen scenario
@@ -38,14 +39,12 @@ const ScannerProvider = ({ children, scenario }) => {
 			stopScan()
 			controls.restart()
 		}
-		else navigate(-1)
-	}, [scanStatus, scenario, navigate])
+		else navigate(`/result/:${scanData.qr_code_link || 'google.com'}`)
+	}, [scanStatus, scenario, navigate, scanData])
 
 	const handleStart = () => {
 		controls.start()
 		startScan()
-		// {device position: {front: number[], side: number[]}}
-		// {frequency_versus_time: number[]}
 		socket.emit('start_scan')
 		socket.on('data_response', data => setScanData(data))
 	}
@@ -59,6 +58,9 @@ const ScannerProvider = ({ children, scenario }) => {
 		controls.restart()
 		handlePause()
 		setScanStatus(prevStatus => ({ ...prevStatus, stage: 0 }))
+	}
+	const showQr = () => {
+		navigate(`/result/:`, { replace: true })
 	}
 
 	const startScan = () => {

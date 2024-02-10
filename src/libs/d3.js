@@ -32,11 +32,10 @@ export const rescaleAxis = (container, containerSize, scaleIndex) => {
 	const tickValues = new Array(tickQty + 1).fill(null).reduce((res, _, i) => {
 		const step = i / tickQty * Math.pow(10, scaleIndex)
 		res.push(step)
-		res.push(-step)
 		return res
 	}, [])
 	const scale = d3.scaleLinear()
-		.domain([-Math.pow(10, scaleIndex) - Math.pow(10, scaleIndex) / 10, Math.pow(10, scaleIndex) + Math.pow(10, scaleIndex) / 10])
+		.domain([0, Math.pow(10, scaleIndex) + Math.pow(10, scaleIndex) / 10])
 		.range([containerSize.height, 0])
 	const y_axis = d3.axisLeft()
 		.scale(scale)
