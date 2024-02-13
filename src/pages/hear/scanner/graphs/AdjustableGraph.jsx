@@ -145,7 +145,8 @@ const AdjustableGraph = ({ title }) => {
 			.append('rect')
 			.attr('width', barWidth)
 			.attr('height', (d) => scale(d))
-			.attr('y', (d) => (wrapperRef.current.offsetHeight - (margin.top + margin.bottom) - scale(d)) / 2)
+			// .attr('y', (d) => (wrapperRef.current.offsetHeight - (margin.top + margin.bottom) - scale(d)) / 2)
+			.attr('y', (d) => (wrapperRef.current.offsetHeight - (margin.top + margin.bottom) - scale(d)))
 			.attr('opacity', 0)
 			.attr('x', (d, i) => (barWidth + barOffset) * i)
 			.attr('rx', 2)
@@ -158,7 +159,8 @@ const AdjustableGraph = ({ title }) => {
 		const scale = d3.scaleLinear().domain(scaleProps.domain).range(scaleProps.range)
 		bars.transition().duration(300)
 			.attr('height', (d) => scale(d))
-			.attr('y', (d) => (containerHeight - scale(d)) / 2)
+			// .attr('y', (d) => (containerHeight - scale(d)) / 2)
+			.attr('y', (d) => (containerHeight - scale(d)))
 			.attr('opacity', 1)
 	}
 
