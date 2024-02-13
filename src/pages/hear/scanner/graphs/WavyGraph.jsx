@@ -38,7 +38,6 @@ const WavyGraph = ({ title, name }) => {
 
 	useEffect(() => {
 		const graphData = data?.wave_graphs.find(graph => graph.title === name).value
-		console.log(graphData)
 		setGraphData(graphData)
 	}, [data?.wave_graphs])
 
