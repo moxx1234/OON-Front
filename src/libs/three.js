@@ -1,10 +1,11 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { ConvexGeometry } from 'three/addons/geometries/ConvexGeometry.js'
 
 export const initializeScene = (container) => {
 	const width = container.width
 	const height = container.height
-	const camera = new THREE.PerspectiveCamera(50, width / height, 5, 1000)
+	const camera = new THREE.PerspectiveCamera(50, width / height, .5, 1000)
 	const renderer = new THREE.WebGLRenderer({
 		canvas: container,
 		alpha: true
@@ -15,13 +16,11 @@ export const initializeScene = (container) => {
 
 	renderer.setPixelRatio(window.devicePixelRatio)
 	renderer.setSize(width, height)
-	camera.position.setZ(15)
+	camera.position.setZ(4)
 
 	const lightPositions = [
-		[5, 5, 5],
-		[-5, 5, 5],
-		[5, -5, 5],
-		[-5, -5, 5],
+		[5, 0, 5],
+		[-5, 0, 5],
 	]
 
 	lightPositions.forEach(position => {
@@ -46,37 +45,29 @@ export const setPointerLight = (position) => {
 	}
 }
 
-export const drawTriangle = () => {
-	const material = new THREE.MeshStandardMaterial({ color: 0x3773F0, flatShading: true })
+export const createTriangle = (vertices) => {
+	const edges = vertices.map(vertex => {
+		const [x, y, z] = vertex
+		return new THREE.Vector3(x, y, z)
+	})
+	const geometry = new ConvexGeometry(edges)
+	const material = new THREE.MeshStandardMaterial({ color: 0x3773F0 })
+	const mesh = new THREE.Mesh(geometry, material)
 
-	const shape = new THREE.Shape()
-	const x = 0
-	const y = 0
-	const triangleHeight = Math.sqrt(3) * 2
-	const arcOffset = 0.4
-	const sideLength = 2 * 2
-
-	shape.moveTo(x - sideLength, y - triangleHeight + arcOffset)
-	shape.quadraticCurveTo(x - sideLength, y - triangleHeight, x - sideLength + arcOffset, y - triangleHeight)
-	shape.lineTo(x + sideLength - arcOffset, y - triangleHeight)
-	shape.quadraticCurveTo(x + sideLength, y - triangleHeight, x + sideLength, y - triangleHeight + arcOffset)
-	shape.lineTo(x + arcOffset, y + triangleHeight - arcOffset)
-	shape.quadraticCurveTo(x, y + triangleHeight, x - arcOffset, y + triangleHeight - arcOffset)
-	shape.lineTo(x - sideLength, y - triangleHeight + arcOffset)
-
-	const extrudedOptions = {
-		steps: 10,
-		depth: 1,
-	}
-
-	const geometry = new THREE.ExtrudeGeometry(shape, extrudedOptions)
-	const triangleMesh = new THREE.Mesh(geometry, material)
 	const triangle = new THREE.Object3D()
-	const axisHelper = new THREE.AxesHelper(5)
 
-	triangle.add(triangleMesh)
-	triangle.add(axisHelper)
-	triangle.name = 'triangle'
+	triangle.add(mesh)
 
 	return triangle
+}
+
+export const center3dObject = (object) => {
+	const box = new THREE.Box3().setFromObject(object)
+	const center = box.getCenter(new THREE.Vector3())
+
+	center.x = -center.x
+	center.y = -center.y
+	center.z = -center.z
+
+	object.position.add(center)
 }
