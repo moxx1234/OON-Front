@@ -37,12 +37,13 @@ const WavyGraph = ({ title, name }) => {
 	}, [])
 
 	useEffect(() => {
-		const graphData = data?.wave_graphs.find(graph => graph.title === name).value
-		setGraphData(graphData)
+		if (!data) return
+		const newData = data.wave_graphs.find(graph => graph.title === name).value
+		setGraphData(newData)
 	}, [data?.wave_graphs])
 
 	useEffect(() => {
-		if (graphData === undefined) return
+		if (graphData === undefined || !lineRef.current) return
 		lineRef.current.append(Date.now(), graphData)
 	}, [graphData])
 

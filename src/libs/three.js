@@ -16,7 +16,10 @@ export const initializeScene = (container) => {
 
 	renderer.setPixelRatio(window.devicePixelRatio)
 	renderer.setSize(width, height)
-	camera.position.setZ(4)
+
+	// inverse the camera
+	camera.rotation.y = Math.PI
+	camera.position.setZ(-4)
 
 	const lightPositions = [
 		[5, 0, 5],

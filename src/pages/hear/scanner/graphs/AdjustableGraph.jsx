@@ -13,155 +13,90 @@ const AdjustableGraph = ({ title }) => {
 	const inputRef = useRef(null)
 	const wrapperRef = useRef(null)
 	const [inputValue, setInputValue] = useState(3)
+	const [barWidth, setBarWidth] = useState(0)
 	const [d3ScaleProp, setD3ScaleProp] = useState({ domain: [0, 10000], range: [] })
 	const [maxBars, setMaxBars] = useState(0)
-	const [chartData, setChartData] = useState({ 0: [], 1: [], recentlyFilled: null })
 
 	useEffect(() => {
 		const graph = wrapperRef.current.querySelector('svg')
 		if (graph) return
 
 		const containerWidth = wrapperRef.current.offsetWidth - (margin.right + margin.left)
-		const containerFitWidth = containerWidth + (containerWidth % (barWidth + barOffset) - barWidth)
+		// const containerFitWidth = containerWidth + (containerWidth % (barWidth + barOffset) - barWidth)
 		const containerHeight = wrapperRef.current.offsetHeight - (margin.top + margin.bottom)
 		const xDomain = [0, 500]
 		const yDomain = [0, Math.pow(10, inputValue) + Math.pow(10, inputValue) / 10]
-		const xRange = [0, containerFitWidth]
+		const xRange = [0, containerWidth]
 		const yRange = [wrapperRef.current.offsetHeight - (margin.top + margin.bottom), 0]
 
-		setMaxBars(Math.floor(containerFitWidth / (barWidth + barOffset)) + 1)
 		drawAxises(wrapperRef.current, margin, { x: xDomain, y: yDomain }, { x: xRange, y: yRange })
 
 		// Positioning wrapper
 		const graphWrapper = d3.select(wrapperRef.current).append('div')
-			.style('width', `${containerFitWidth}px`)
+			.style('width', `${containerWidth}px`)
 			.style('height', `${containerHeight}px`)
 			.style('position', 'absolute')
 			.style('left', `${margin.left}px`)
 			.style('top', `${margin.top}px`)
 
 		// Graph viewbox
-		const barsWrapper = graphWrapper.append('div')
+		const barsWrapper = graphWrapper.append('svg')
 			.classed('bars-wrapper', true)
 			.style('height', '100%')
+			.style('width', '100%')
 			.style('display', 'flex')
 			.style('position', 'relative')
 			.style('overflow', 'hidden')
 
-		// Create two moving containers for animation
-		for (let i = 0; i < 2; i++) {
-			barsWrapper.append('svg')
-				.classed(`bars-container`, true)
-				.attr('width', containerFitWidth)
-				.attr('height', containerHeight)
-				.style('position', 'absolute')
-				.style('left', `${i * 100}%`)
-				.style('transition', '.3s left linear')
-		}
 	}, [])
 
 	useEffect(() => {
 		const containerWidth = wrapperRef.current.offsetWidth - (margin.right + margin.left)
-		const containerFitWidth = containerWidth + (containerWidth % (barWidth + barOffset) + barWidth)
+		const containerHeight = wrapperRef.current.offsetHeight - (margin.top + margin.bottom)
 		const size = {
-			width: containerFitWidth,
-			height: wrapperRef.current.offsetHeight - (margin.top + margin.bottom)
+			width: containerWidth,
+			height: containerHeight
 		}
 		// Change graph scale
 		const svg = d3.select(wrapperRef.current.querySelector('.axises')).select('g.y-axis')
 		rescaleAxis(svg, size, inputValue)
-		setD3ScaleProp(prevProps => ({ ...prevProps, range: [0, ((wrapperRef.current.offsetHeight - (margin.top + margin.bottom)) * 10000 / Math.pow(10, inputValue))] }))
+		setD3ScaleProp(prevProps => ({ ...prevProps, range: [0, (containerHeight * 10000 / Math.pow(10, inputValue))] }))
 
 		// Set styles
 		d3.select(wrapperRef.current).selectAll('text').style('font-size', '12px').style('color', '#434A54')
 		d3.select(wrapperRef.current).selectAll('line').attr('stroke', '#D1D9DE')
+
 		// Change input style
 		const inputElement = inputRef.current
 		if (inputElement) inputElement.style.background = `linear-gradient(90deg, rgba(9,16,29,1) 0%, rgba(9,16,29,1) ${inputValue * 100 / inputMax}%, rgba(255,255,255,1) ${inputValue * 100 / inputMax}%, rgba(255,255,255,1) 100%)`
 	}, [inputValue])
 
 	useEffect(() => {
-		if (!maxBars || !data?.frequency_versus_time) return
-
-		// Fill corresponding data array and trace the filling proccess
-		setChartData(prev => {
-			if (prev[0].length < maxBars) return { ...prev, 0: [...prev[0], data.frequency_versus_time] }
-			else if (prev[1].length < maxBars) return { ...prev, 1: [...prev[1], data.frequency_versus_time] }
-			else {
-				const newData = clearArray(prev.recentlyFilled === null ? 1 : 0)
-				return { ...prev, ...newData, recentlyFilled: prev.recentlyFilled === null ? 1 : Number(!prev.recentlyFilled) }
-			}
-		})
-	}, [data?.frequency_versus_time, maxBars])
-
-	useEffect(() => {
-		if (!maxBars || !d3ScaleProp.range.length) return
-		const barsContainers = document.querySelectorAll('.bars-container')
-
-		const yScale = d3.scaleLinear().domain(d3ScaleProp.domain).range(d3ScaleProp.range)
-
-		// Draw bars and animate containers movement
-		if (chartData[0].length < maxBars) {
-			drawBar(barsContainers[0], chartData[0], yScale)
-			if (chartData.recentlyFilled === null) return
-			moveLeft(barsContainers)
-		} else if (chartData[1].length < maxBars) {
-			drawBar(barsContainers[1], chartData[1], yScale)
-			moveLeft(barsContainers)
-		}
-
-	}, [chartData, maxBars])
-
-	useEffect(() => {
+		if (!data) return
 		const containerHeight = wrapperRef.current.offsetHeight - (margin.top + margin.bottom)
-		rescaleBars(d3ScaleProp, containerHeight)
-	}, [d3ScaleProp])
+		const containerWidth = wrapperRef.current.offsetWidth - (margin.left + margin.right)
+		const barWidth = containerWidth / data.frequency_versus_time.length
+
+		const bars = d3.select('.bars-wrapper')
+			.selectAll('rect')
+			.data(data.frequency_versus_time)
+
+		bars.enter()
+			.append('rect')
+
+		bars.attr('height', d => d)
+			.attr('width', barWidth)
+			.attr('x', (d, i) => i * barWidth)
+			.transition()
+			.duration(100)
+			.attr('y', d => containerHeight - d)
+
+		bars.exit().remove()
+
+	}, [data?.frequency_versus_time])
 
 	const handleChange = ({ target }) => {
 		setInputValue(target.value)
-	}
-
-	const clearArray = (lastFilled) => {
-		return { [Number(!lastFilled)]: [] }
-	}
-	const moveLeft = (items) => {
-		items.forEach(item => {
-			const currentPosition = item.style.left.replace('%', '')
-			if (currentPosition === '-99') {
-				item.style.transition = 'none'
-				item.style.display = 'none'
-				item.style.left = '100%'
-				item.style.transition = '.3s left linear'
-				return
-			}
-			item.style.display = 'block'
-			item.style.left = `${currentPosition - 1}%`
-		})
-	}
-	const drawBar = (container, data, scale) => {
-		const bars = d3.select(container).selectAll('rect')
-			.data(data)
-			.enter()
-			.append('rect')
-			.attr('width', barWidth)
-			.attr('height', (d) => scale(d))
-			// .attr('y', (d) => (wrapperRef.current.offsetHeight - (margin.top + margin.bottom) - scale(d)) / 2)
-			.attr('y', (d) => (wrapperRef.current.offsetHeight - (margin.top + margin.bottom) - scale(d)))
-			.attr('opacity', 0)
-			.attr('x', (d, i) => (barWidth + barOffset) * i)
-			.attr('rx', 2)
-			.attr('stroke', '#6A727D')
-			.attr('fill', '#6A727D')
-		bars.transition().duration(300).attr('opacity', 1)
-	}
-	const rescaleBars = (scaleProps, containerHeight) => {
-		const bars = d3.selectAll('.bars-container').selectAll('rect')
-		const scale = d3.scaleLinear().domain(scaleProps.domain).range(scaleProps.range)
-		bars.transition().duration(300)
-			.attr('height', (d) => scale(d))
-			// .attr('y', (d) => (containerHeight - scale(d)) / 2)
-			.attr('y', (d) => (containerHeight - scale(d)))
-			.attr('opacity', 1)
 	}
 
 	return (
