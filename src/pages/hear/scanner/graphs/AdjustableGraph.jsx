@@ -60,7 +60,7 @@ const AdjustableGraph = ({ title }) => {
 		// Change graph scale
 		const svg = d3.select(wrapperRef.current.querySelector('.axises')).select('g.y-axis')
 		rescaleAxis(svg, size, inputValue)
-		setD3ScaleProp(prevProps => ({ ...prevProps, range: [0, (containerHeight * 10000 / Math.pow(10, inputValue))] }))
+		setD3ScaleProp(prevProps => ({ ...prevProps, range: [(containerHeight * 10000 / Math.pow(10, inputValue)), 0] }))
 
 		// Set styles
 		d3.select(wrapperRef.current).selectAll('text').style('font-size', '12px').style('color', '#434A54')
@@ -73,9 +73,12 @@ const AdjustableGraph = ({ title }) => {
 
 	useEffect(() => {
 		if (!data) return
+		if (!data.frequency_versus_time) return
 		const containerHeight = wrapperRef.current.offsetHeight - (margin.top + margin.bottom)
 		const containerWidth = wrapperRef.current.offsetWidth - (margin.left + margin.right)
 		const barWidth = containerWidth / data.frequency_versus_time.length
+
+		const yScale = d3.scaleLinear().domain(d3ScaleProp.domain).range(d3ScaleProp.range)
 
 		const bars = d3.select('.bars-wrapper')
 			.selectAll('rect')
@@ -83,15 +86,16 @@ const AdjustableGraph = ({ title }) => {
 
 		bars.enter()
 			.append('rect')
-
-		bars.attr('height', d => d)
 			.attr('width', barWidth)
 			.attr('x', (d, i) => i * barWidth)
+			.attr('fill', '#6A727D')
+			.style('transform', 'rotate(180deg)')
+			.style('transform-origin', 'bottom center')
+
+		bars.attr('y', d => containerHeight)
 			.transition()
 			.duration(100)
-			.attr('y', d => containerHeight - d)
-
-		bars.exit().remove()
+			.attr('height', d => yScale(d))
 
 	}, [data?.frequency_versus_time])
 
