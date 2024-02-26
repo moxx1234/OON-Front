@@ -91,13 +91,22 @@ const AdjustableGraph = ({ title }) => {
 			.attr('fill', '#6A727D')
 			.style('transform', 'rotate(180deg)')
 			.style('transform-origin', 'bottom center')
+			.attr('y', d => containerHeight)
 
-		bars.attr('y', d => containerHeight)
-			.transition()
+		bars.transition()
 			.duration(100)
 			.attr('height', d => yScale(d))
 
 	}, [data?.frequency_versus_time])
+
+	useEffect(() => {
+		const yScale = d3.scaleLinear().domain(d3ScaleProp.domain).range(d3ScaleProp.range)
+		d3.select('.bars-wrapper')
+			.selectAll('rect')
+			.transition()
+			.duration(100)
+			.attr('height', d => yScale(d))
+	}, [d3ScaleProp])
 
 	const handleChange = ({ target }) => {
 		setInputValue(target.value)
