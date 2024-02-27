@@ -14,7 +14,6 @@ const AdjustableGraph = ({ title }) => {
 	const wrapperRef = useRef(null)
 	const [inputValue, setInputValue] = useState(3)
 	const [barWidth, setBarWidth] = useState(0)
-	const [d3ScaleProp, setD3ScaleProp] = useState({ domain: [0, 10000], range: [] })
 	const [maxBars, setMaxBars] = useState(0)
 
 	useEffect(() => {
@@ -48,6 +47,10 @@ const AdjustableGraph = ({ title }) => {
 			.style('position', 'relative')
 			.style('overflow', 'hidden')
 
+		barsWrapper.selectAll('rect')
+			.exit()
+			.remove()
+
 	}, [])
 
 	useEffect(() => {
@@ -60,7 +63,6 @@ const AdjustableGraph = ({ title }) => {
 		// Change graph scale
 		const svg = d3.select(wrapperRef.current.querySelector('.axises')).select('g.y-axis')
 		rescaleAxis(svg, size, inputValue)
-		setD3ScaleProp(prevProps => ({ ...prevProps, range: [(containerHeight * 10000 / Math.pow(10, inputValue)), 0] }))
 
 		// Set styles
 		d3.select(wrapperRef.current).selectAll('text').style('font-size', '12px').style('color', '#434A54')
@@ -78,7 +80,7 @@ const AdjustableGraph = ({ title }) => {
 		const containerWidth = wrapperRef.current.offsetWidth - (margin.left + margin.right)
 		const barWidth = containerWidth / data.frequency_versus_time.length
 
-		const yScale = d3.scaleLinear().domain(d3ScaleProp.domain).range(d3ScaleProp.range)
+		// const yScale = d3.scaleLinear().domain(d3ScaleProp.domain).range(d3ScaleProp.range)
 
 		const bars = d3.select('.bars-wrapper')
 			.selectAll('rect')
@@ -95,18 +97,18 @@ const AdjustableGraph = ({ title }) => {
 
 		bars.transition()
 			.duration(100)
-			.attr('height', d => yScale(d))
+			.attr('height', d => d)
 
 	}, [data?.frequency_versus_time])
 
-	useEffect(() => {
-		const yScale = d3.scaleLinear().domain(d3ScaleProp.domain).range(d3ScaleProp.range)
-		d3.select('.bars-wrapper')
-			.selectAll('rect')
-			.transition()
-			.duration(100)
-			.attr('height', d => yScale(d))
-	}, [d3ScaleProp])
+	// useEffect(() => {
+	// 	const yScale = d3.scaleLinear().domain(d3ScaleProp.domain).range(d3ScaleProp.range)
+	// 	d3.select('.bars-wrapper')
+	// 		.selectAll('rect')
+	// 		.transition()
+	// 		.duration(100)
+	// 		.attr('height', d => yScale(d))
+	// }, [])
 
 	const handleChange = ({ target }) => {
 		setInputValue(target.value)
