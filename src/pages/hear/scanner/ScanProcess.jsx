@@ -3,14 +3,14 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import CenteredWrapper from '../components/CenteredWrapper'
 import ScannerProvider from '../context/ScannerProvider'
-import AdjustableGraph from './graphs/AdjustableGraph'
-import SoundGraph from './graphs/SoundGraph'
-import WavyGraph from './graphs/WavyGraph'
-import Gyro from './gyro/Gyro'
 import HeartRate from './HeartRate'
 import ScanControls from './ScanControls'
+import ScanHelper from './ScanHelper'
 import ScanInstruction from './ScanInstruction'
 import ScanVisual from './ScanVisual'
+import AdjustableGraph from './graphs/AdjustableGraph'
+import WavyGraph from './graphs/WavyGraph'
+import Gyro from './gyro/Gyro'
 
 const ScanProcess = ({ scenario }) => {
 	const navigate = useNavigate()
@@ -53,15 +53,8 @@ const ScanProcess = ({ scenario }) => {
 							<div className='tw-basis-1/3 tw-flex tw-flex-col tw-gap-4'>
 								<Gyro />
 								<HeartRate />
-								<div className='tw-flex tw-flex-col tw-gap-2 tw-p-6 tw-rounded-3xl tw-bg-gradient-to-l tw-from-[rgba(239,248,255,0.70)] tw-from-[10.38%] tw-to-[rgba(255,255,255,0.63)] tw-to-[94.42%]'>
-									<SoundGraph title='Normal (Vesicular)' />
-									<SoundGraph title='Bronchial ' />
-									<SoundGraph title='Wheezing' />
-									<SoundGraph title='Ronchi' />
-									<SoundGraph title='Fine Crackles' />
-									<SoundGraph title='Coarse Crackles' />
-									<SoundGraph title='Pleural Friction Rub' />
-									<SoundGraph title='Stridor' />
+								<div className='tw-flex tw-flex-1 tw-p-6 tw-rounded-3xl tw-bg-gradient-to-l tw-from-[rgba(239,248,255,0.70)] tw-from-[10.38%] tw-to-[rgba(255,255,255,0.63)] tw-to-[94.42%]'>
+									<ScanHelper />
 								</div>
 							</div>
 						</div>

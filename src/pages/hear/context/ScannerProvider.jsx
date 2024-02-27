@@ -88,7 +88,8 @@ const ScannerProvider = ({ children, scenario }) => {
 			isScanning,
 			hasStarted,
 			stageDuration,
-			totalStages
+			totalStages,
+			scenario
 		},
 		data: scanData
 	}

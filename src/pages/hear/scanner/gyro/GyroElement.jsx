@@ -55,7 +55,7 @@ const GyroElement = ({ title, name }) => {
 	return (
 		<div className='tw-flex tw-flex-col tw-flex-1'>
 			<p className='tw-text-center tw-font-semibold tw-mb-3'>{title}</p>
-			<div className='tw-flex-1 tw-relative' ref={wrapperRef}>
+			<div className='tw-flex-1 tw-min-h-[120px] tw-relative' ref={wrapperRef}>
 				<img src={svgCircle} alt="" className='tw-absolute tw-h-full tw-w-full' />
 			</div>
 		</div>
