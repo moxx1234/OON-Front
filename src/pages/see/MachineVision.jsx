@@ -10,12 +10,12 @@ import Result from './Result'
 import ExitDialog from '../../components/ExitDialog'
 import Header from '../../components/Header'
 
-const delay = 20
+const delay = 5
 
 const MachineVision = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
-	const [scanStage, setScanStage] = useState(1)
+	const [scanStage, setScanStage] = useState(0)
 	const [scanData, setScanData] = useState()
 	const [landmarks, setLandmarks] = useState()
 	const [mesh, setMesh] = useState()
