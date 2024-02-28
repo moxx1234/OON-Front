@@ -9,14 +9,13 @@ const Questions = ({ stage, onAnswer }) => {
 		if (stage === 0) {
 			return (
 				<>
-					<h1 className={questionClassName}>Do we have your permission to <br /> record data aimed to support your work performance and safety?</h1>
-					<p className={descriptionClassName}>Declining permission will not affect your right to work. Your health data will not be shared with your employer</p>
+					<h1 className={questionClassName}>I give permission to process and use my health data for the purposes described in the Privacy Policy</h1>
 				</>
 			)
 		} else {
 			return (
 				<>
-					<h1 className={questionClassName}>Have you had contact with COVID - 19, RSV, or flu?</h1>
+					<h1 className={questionClassName}>Have you had contact with COVID-19, RSV, flu or TB?</h1>
 					<p className={descriptionClassName}>If you don't know please select NO</p>
 				</>
 			)
@@ -35,8 +34,13 @@ const Questions = ({ stage, onAnswer }) => {
 				{renderQuestions()}
 			</div>
 			<div className="tw-flex tw-gap-4">
-				<Button value='no' onClick={onAnswer} />
-				<Button value='yes' onClick={onAnswer} />
+				{stage === 0 ?
+					<Button value='Start using App' onClick={onAnswer} /> :
+					<>
+						<Button value='no' onClick={onAnswer} />
+						<Button value='yes' onClick={onAnswer} />
+					</>
+				}
 			</div>
 		</motion.div>
 	)

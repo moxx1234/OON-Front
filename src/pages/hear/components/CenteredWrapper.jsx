@@ -4,7 +4,7 @@ const CenteredWrapper = ({ children, animDuration }) => {
 	return (
 		<div className='tw-flex tw-flex-1 tw-items-center tw-justify-center'>
 			<motion.div
-				className="tw-bg-gradient-to-r tw-from-white tw-to-[#EFF8FF] tw-p-9 tw-rounded-3xl tw-max-w-[868px]"
+				className="tw-bg-gradient-to-r tw-from-white tw-to-[#EFF8FF] tw-p-9 tw-rounded-3xl tw-min-w-[800px] tw-max-w-[868px]"
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}

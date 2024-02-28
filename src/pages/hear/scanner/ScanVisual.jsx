@@ -23,7 +23,7 @@ const ScanVisual = ({ message, isPlaced }) => {
 				<div className='tw-relative tw-h-full tw-w-5'>
 					{isPlaced ? <img src={success} alt='success icon' className='tw-absolute tw-w-full tw-h-full' /> : <img src={info} alt='info icon' className='tw-absolute tw-w-full tw-h-full' />}
 				</div>
-				<p className='tw-font-semibold'>{message || `Place the device on position ${status.stage + 1} and start`}</p>
+				<p className='tw-font-semibold'>{message || `Place the device on position ${status.stage + 1} and START`}</p>
 			</div>
 		</div>
 	)

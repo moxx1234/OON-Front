@@ -20,7 +20,7 @@ const QuestionnaireForm = ({ onSubmit, onCancelSubmit }) => {
 
 	const questions = Object.keys(initialValues).reduce((acc, field) => {
 		if (field === 'has_fever') return acc
-		const value = field === 'dry_cough' ? 'a ' + field.replace(/_/g, ' ') : field.replace(/_/g, ' ')
+		const value = field.replace(/_/g, ' ')
 		return [...acc, value]
 	}, [])
 

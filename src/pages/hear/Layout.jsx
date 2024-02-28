@@ -21,7 +21,7 @@ const Layout = () => {
 
 	return (
 		<>
-			<Header process='Vibrome' abort={handleAbort} />
+			<Header process='Vibrome&#8482; biosignatures	' abort={handleAbort} />
 			<ExitDialog
 				isOpen={isModalOpen}
 				onConfirmNav={handleConfirmAbort}

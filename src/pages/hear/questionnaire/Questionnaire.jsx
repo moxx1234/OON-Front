@@ -18,7 +18,7 @@ const Questionnaire = () => {
 
 	const handleAnswer = ({ target }) => {
 		const { value } = target
-		setAnswers((prevAnswers) => ({ ...prevAnswers, [stages[stage]]: value === 'yes' ? true : false }))
+		setAnswers((prevAnswers) => ({ ...prevAnswers, [stages[stage]]: value === 'yes' || value === 'Start using App' ? true : false }))
 		setStage(stage + 1)
 	}
 

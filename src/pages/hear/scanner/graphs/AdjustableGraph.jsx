@@ -1,21 +1,17 @@
-import { useContext, useEffect, useRef, useState } from 'react'
-import { ScanContext } from "../../context/ScannerProvider"
 import * as d3 from 'd3'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { drawAxises, rescaleAxis } from '../../../../libs/d3'
+import { ScanContext } from "../../context/ScannerProvider"
 
 const inputMax = 4
 const margin = { top: 0, right: 0, bottom: 24, left: 44 }
-const barOffset = 4
-const barWidth = 4
 
 const AdjustableGraph = ({ title }) => {
 	const { data } = useContext(ScanContext)
 	const inputRef = useRef(null)
 	const wrapperRef = useRef(null)
 	const [inputValue, setInputValue] = useState(2)
-	const [barWidth, setBarWidth] = useState(0)
 	const [d3ScaleProp, setD3ScaleProp] = useState({ domain: [0, 10000], range: [] })
-	const [maxBars, setMaxBars] = useState(0)
 
 	useEffect(() => {
 		const graph = wrapperRef.current.querySelector('svg')
@@ -117,7 +113,7 @@ const AdjustableGraph = ({ title }) => {
 			<div className='tw-h-[168px] tw-relative' ref={wrapperRef}>
 			</div>
 			<div className='tw-p-4 tw-rounded-xl tw-bg-[rgba(213,221,227,1)] tw-flex tw-items-center tw-gap-6'>
-				<p className='tw-font-bold tw-text-[#0C1022]'>Adjust Freq. range</p>
+				<p className='tw-font-bold tw-text-[#0C1022]'>Adjust freq. range</p>
 				<div className='tw-flex-1 tw-flex tw-flex-col tw-justify-center tw-gap-3'>
 					<input
 						ref={inputRef}

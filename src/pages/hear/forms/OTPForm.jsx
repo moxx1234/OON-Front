@@ -84,7 +84,7 @@ const OTPForm = () => {
 						)
 					}}
 				</Formik>
-				<p className="tw-font-bold tw-text-[44px] tw-text-[#434A54] tw-uppercase tw-text-center">Device not intended for clinical diagnosis</p>
+				<p className="tw-font-bold tw-text-[44px] tw-text-[#434A54] tw-uppercase tw-text-center">Device has not been approved by FDA for clinical diagnosis</p>
 			</motion.div>
 		</AnimatePresence>
 	)

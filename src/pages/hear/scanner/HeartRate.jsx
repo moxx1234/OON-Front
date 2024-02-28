@@ -16,7 +16,7 @@ const HeartRate = () => {
 			<div className='tw-flex tw-gap-4 tw-items-center'>
 				<p className='tw-font-bold tw-text-[60px] tw-leading-[100%] tw-basis-[36%] tw-text-end'>{data?.heart_rate_variability || '-'}</p>
 				<div>
-					<p className='tw-mb-[7px]'>/msec</p>
+					<p className='tw-mb-[7px]'>/ms</p>
 					<p className='tw-font-bold'>HEART RATE VARIABILITY</p>
 				</div>
 			</div>
