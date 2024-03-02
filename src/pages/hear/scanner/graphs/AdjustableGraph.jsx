@@ -1,7 +1,8 @@
 import * as d3 from 'd3'
-import { useContext, useEffect, useRef, useState } from 'react'
-import { drawAxises, rescaleAxis } from '../../../../libs/d3'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { drawAxes, rescaleAxis } from '../../../../libs/d3'
 import { ScanContext } from "../../context/ScannerProvider"
+import Bars from './Bars'
 
 const inputMax = 4
 const margin = { top: 0, right: 0, bottom: 24, left: 44 }
@@ -13,36 +14,16 @@ const AdjustableGraph = ({ title }) => {
 	const [inputValue, setInputValue] = useState(2)
 	const [d3ScaleProp, setD3ScaleProp] = useState({ domain: [0, 10000], range: [] })
 
-	useEffect(() => {
-		const graph = wrapperRef.current.querySelector('svg')
-		if (graph) return
+	const yScale = useCallback(d3.scaleLinear().domain(d3ScaleProp.domain).range(d3ScaleProp.range), [d3ScaleProp])
 
+	useEffect(() => {
 		const containerWidth = wrapperRef.current.offsetWidth - (margin.right + margin.left)
-		const containerHeight = wrapperRef.current.offsetHeight - (margin.top + margin.bottom)
 		const xDomain = [0, 500]
 		const yDomain = [0, Math.pow(10, inputValue) + Math.pow(10, inputValue) / 10]
 		const xRange = [0, containerWidth]
 		const yRange = [wrapperRef.current.offsetHeight - (margin.top + margin.bottom), 0]
 
-		drawAxises(wrapperRef.current, margin, { x: xDomain, y: yDomain }, { x: xRange, y: yRange })
-
-		// Positioning wrapper
-		const graphWrapper = d3.select(wrapperRef.current).append('div')
-			.style('width', `${containerWidth}px`)
-			.style('height', `${containerHeight}px`)
-			.style('position', 'absolute')
-			.style('left', `${margin.left}px`)
-			.style('top', `${margin.top}px`)
-
-		// Graph viewbox
-		const barsWrapper = graphWrapper.append('svg')
-			.classed('bars-wrapper', true)
-			.style('height', '100%')
-			.style('width', '100%')
-			.style('display', 'flex')
-			.style('position', 'relative')
-			.style('overflow', 'hidden')
-
+		drawAxes(wrapperRef.current, margin, { x: xDomain, y: yDomain }, { x: xRange, y: yRange })
 	}, [])
 
 	useEffect(() => {
@@ -66,43 +47,6 @@ const AdjustableGraph = ({ title }) => {
 		if (inputElement) inputElement.style.background = `linear-gradient(90deg, rgba(9,16,29,1) 0%, rgba(9,16,29,1) ${inputValue * 100 / inputMax}%, rgba(255,255,255,1) ${inputValue * 100 / inputMax}%, rgba(255,255,255,1) 100%)`
 	}, [inputValue])
 
-	useEffect(() => {
-		if (!data) return
-		if (!data.frequency_versus_time) return
-		const containerHeight = wrapperRef.current.offsetHeight - (margin.top + margin.bottom)
-		const containerWidth = wrapperRef.current.offsetWidth - (margin.left + margin.right)
-		const barWidth = containerWidth / data.frequency_versus_time.length
-
-		const yScale = d3.scaleLinear().domain(d3ScaleProp.domain).range(d3ScaleProp.range)
-
-		const bars = d3.select('.bars-wrapper')
-			.selectAll('rect')
-			.data(data.frequency_versus_time)
-
-		bars.enter()
-			.append('rect')
-			.attr('width', barWidth)
-			.attr('x', (d, i) => i * barWidth)
-			.attr('fill', '#6A727D')
-			.style('transform', 'rotate(180deg)')
-			.style('transform-origin', 'bottom center')
-			.attr('y', d => containerHeight)
-
-		bars.transition()
-			.duration(100)
-			.attr('height', d => yScale(d))
-
-	}, [data?.frequency_versus_time])
-
-	useEffect(() => {
-		const yScale = d3.scaleLinear().domain(d3ScaleProp.domain).range(d3ScaleProp.range)
-		d3.select('.bars-wrapper')
-			.selectAll('rect')
-			.transition()
-			.duration(100)
-			.attr('height', d => yScale(d))
-	}, [d3ScaleProp])
-
 	const handleChange = ({ target }) => {
 		setInputValue(target.value)
 	}
@@ -111,6 +55,13 @@ const AdjustableGraph = ({ title }) => {
 		<>
 			<p className='tw-font-semibold'>{title}</p>
 			<div className='tw-h-[168px] tw-relative' ref={wrapperRef}>
+				{
+					data?.frequency_versus_time && <Bars
+						data={data.frequency_versus_time}
+						yScale={yScale}
+						margin={margin}
+					/>
+				}
 			</div>
 			<div className='tw-p-4 tw-rounded-xl tw-bg-[rgba(213,221,227,1)] tw-flex tw-items-center tw-gap-6'>
 				<p className='tw-font-bold tw-text-[#0C1022]'>Adjust freq. range</p>

@@ -17,17 +17,17 @@ const ScanProcess = ({ scenario }) => {
 	const [isRead, setIsRead] = useState(false)
 
 	return (
-		<ScannerProvider scenario={scenario}>
-			<AnimatePresence mode='wait'>
-				<motion.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					layout
-					transition={{ duration: 0.15 }}
-					key={isRead}
-					className='tw-flex-1 tw-flex tw-justify-center tw-items-center tw-px-8 tw-mt-2'
-				>
+		<AnimatePresence mode='wait'>
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
+				layout
+				transition={{ duration: 0.15 }}
+				key={isRead}
+				className='tw-flex-1 tw-flex tw-justify-center tw-items-center tw-px-8 tw-mt-2'
+			>
+				<ScannerProvider scenario={scenario}>
 					{!isRead ? (
 						<CenteredWrapper animDuration={0.15}>
 							<ScanInstruction scenario={scenario} onRead={() => setIsRead(true)} onDismiss={() => navigate(-1)} />
@@ -59,9 +59,10 @@ const ScanProcess = ({ scenario }) => {
 							</div>
 						</div>
 					)}
-				</motion.div>
-			</AnimatePresence>
-		</ScannerProvider>
+				</ScannerProvider>
+			</motion.div>
+		</AnimatePresence>
+
 	)
 }
 

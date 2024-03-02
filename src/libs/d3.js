@@ -1,6 +1,7 @@
 import * as d3 from 'd3'
 
-export const drawAxises = (container, margin, domain, range) => {
+export const drawAxes = (container, margin, domain, range) => {
+	if (container.querySelector('svg.axises')) return
 	const size = {
 		width: container.offsetWidth,
 		height: container.offsetHeight

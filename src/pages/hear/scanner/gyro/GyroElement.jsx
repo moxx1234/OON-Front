@@ -33,7 +33,7 @@ const GyroElement = ({ title, name }) => {
 
 	useEffect(() => {
 		if (!data) return
-		vertices.current = data.device_position[name]
+		// vertices.current = data.device_position[name]
 	}, [data?.device_position])
 
 	const animate = () => {
